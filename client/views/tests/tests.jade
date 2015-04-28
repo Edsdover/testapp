@@ -1,0 +1,47 @@
+h3 Test Score Tracker
+.row
+  .col-xs-4
+    h4 Subject Creation
+    form(name='subjectTypeForm', novalidate)
+      .form-group
+        label(for='subjectName') Subject Name
+        input.form-control#subjectName(type='text', name='subjectName', ng-model='subjectName')
+      .form-group
+        button.btn-lg.btn-info(type='submit', ng-click='addSubject(subjectName)') Add Subject
+  .col-xs-1
+  .col-xs-6
+    h4 Add Score
+    form(name='scoreForm', novalidate)
+      .form-group
+        label(for='subjectType') Subject Type
+        select.form-control#subjectType(name='subjectType', ng-model='tx.type')
+          option(ng-repeat='name in names track by $index') {{name}}
+      .form-group
+        label(for='assignment') Assignment Name
+        input.form-control#assignment(type='text', name='assignment', ng-model='tx.assignment')
+      .form-group
+        label(for='score') Score
+        input.form-control#score(type='number', name='score', ng-model='tx.score')
+      .form-group
+        label(for='date') Date Taken
+        input.form-control#date(type='date', name='date', ng-model='tx.date')
+      .form-group
+        button.btn-lg.btn-success(ng-click='addScore("score", tx)') Submit
+  .col-xs-8
+table.table.table-striped.table-hover(ng-repeat='(key, value) in afUser.tests')
+  thead
+    tr
+      th Subject
+      th Assignment
+      th Date Taken
+      th Score
+      th Edit
+      th Delete
+  tbody
+    tr(ng-repeat='test in afUser.tests[key]')
+      td {{test.type}}
+      td {{test.assignment | uppercase}}
+      td {{test.date | date:'MM-dd-yyyy'}}
+      td {{test.score}}
+      td: button.btn-sm.btn-warning(ng-click='editTest(test, $index)') Edit
+      td: button.btn-sm.btn-danger(ng-click='delTest(test, $index)') Delete
